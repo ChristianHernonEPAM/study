@@ -4,6 +4,7 @@ import Todo from "../Todo/Todo";
 
 const TodoList = ({ todos, todosDispatch }) => {
   const [title, setTitle] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -18,7 +19,7 @@ const TodoList = ({ todos, todosDispatch }) => {
   const sortAscendingByDueTime = (arr) => arr.sort((a, b) => a.dueTime - b.dueTime);
 
   return (
-    <section className="todo-list">
+    <section className="todo-list" data-testid="todo-list">
       <h2>Your Todo List: </h2>
       {sortAscendingByDueTime(todos).map((todo) => (
         <Todo key={todo.id} todo={todo} todosDispatch={todosDispatch} />
@@ -29,12 +30,12 @@ const TodoList = ({ todos, todosDispatch }) => {
           name="title"
           placeholder="Add new todo item..."
           title="new todo"
-          data-testid="newTodo"
+          data-testid="todo-list.title"
           required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <button type="submit">Add</button>
+        <button type="submit" data-testid="todo-list.add">Add</button>
       </form>
     </section>
   );

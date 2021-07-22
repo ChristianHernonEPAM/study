@@ -33,7 +33,7 @@ const TodoForm = ({ todos, todosDispatch }) => {
   }, [todos]);
 
   return (
-    <section className="todo-details">
+    <section className="todo-details" data-testid="todo-form">
       <h2>Todo Details: </h2>
       {todo?.title ? (
         <form className="todo-form" onSubmit={handleSubmit}>
@@ -41,6 +41,7 @@ const TodoForm = ({ todos, todosDispatch }) => {
             type="text"
             name="title"
             placeholder="Build new React app..."
+            data-testid="todo-form.title"
             required
             ref={inputRef}
             value={todo.title}
@@ -49,6 +50,7 @@ const TodoForm = ({ todos, todosDispatch }) => {
           <textarea
             name="description"
             placeholder="Description..."
+            data-testid="todo-form.description"
             value={todo.description}
             onChange={handleChange}
           />
@@ -56,6 +58,7 @@ const TodoForm = ({ todos, todosDispatch }) => {
             <input
               type="date"
               name="dueDate"
+              data-testid="todo-form.date"
               value={todo.dueDate}
               onChange={handleChange}
             />
@@ -64,15 +67,19 @@ const TodoForm = ({ todos, todosDispatch }) => {
               <input
                 type="checkbox"
                 name="complete"
+                data-testid="todo-form.complete"
                 checked={todo.complete}
                 onChange={handleChange}
               />
             </label>
           </div>
           <div className="button-wrap">
-            <button type="submit">Update</button>
+            <button type="submit" data-testid="todo-form.update">
+              Update
+            </button>
             <button
               type="button"
+              data-testid="todo-form.cancel"
               onClick={() => todosDispatch({ type: TODO_ACTIONS.DESELECT })}
             >
               Cancel
