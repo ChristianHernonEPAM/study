@@ -1,0 +1,219 @@
+$borderRadius: 0.25rem;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 300;
+  font-family: "Raleway", sans-serif;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+  // border-radius: $borderRadius;
+}
+
+input,
+textarea {
+  padding: 0.5em;
+
+  &::placeholder {
+    opacity: 0.7;
+    font-style: italic;
+  }
+}
+
+button {
+  padding: 0.5em 1em;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.2s;
+  background: radial-gradient();
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &[type="submit"] {
+    background: dodgerblue;
+    color: #fff;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+}
+
+code,
+pre {
+  background: #efefef;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0.7em 0;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+label {
+  cursor: pointer;
+}
+
+form {
+  font-size: 1.4rem;
+
+  textarea {
+    resize: vertical;
+  }
+
+  :is(input, button, textarea, label) {
+    font-size: inherit;
+  }
+}
+
+.todo-app {
+  margin: clamp(4rem, 10vh, 8rem) auto;
+  width: clamp(32rem, 100vw, 80rem);
+  padding: 1.5rem;
+}
+
+.todo-form {
+  margin: 0 0 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.todo-form :is(input[type="text"], textarea) {
+  width: 100%;
+}
+
+.todo-display {
+  display: grid;
+  grid-template-columns: 4fr 5fr;
+  gap: 2rem;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.new-todo-form {
+  display: flex;
+  gap: 1rem;
+
+  :is(input, button) {
+    border: none;
+  }
+
+  input {
+    flex: 1;
+    background: #efefef;
+  }
+}
+
+.todo-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  transition: background 0.2s;
+  padding: clamp(5px, 0.5em, 20px);
+  border-radius: $borderRadius;
+
+  &.active {
+    background:rgba(0, 0, 0, 0.1);
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.todo-item-name {
+  flex: 1 1 auto;
+
+  &[data-complete="true"] {
+    text-decoration: line-through;
+  }
+}
+
+.flex-wrap {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.button-wrap {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-item-button {
+  font-size: inherit;
+  background: none;
+  border: none;
+  padding: 0.25em;
+  transition: background 0.2s;
+
+  &.remove {
+    color: tomato;
+  }
+
+  &.edit {
+    color: dodgerblue;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.todo-details {
+  padding-left: 2rem;
+  border-left: 3px solid #333;
+}
+
+@media screen and (max-width: 768px) {
+  .todo-display {
+    grid-template-columns: 1fr;
+  }
+  .todo-details {
+    padding-left: 0;
+    border-left: none;
+    border-top: 3px solid #333;
+  }
+}
