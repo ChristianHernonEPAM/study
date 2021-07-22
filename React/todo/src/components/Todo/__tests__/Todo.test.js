@@ -1,66 +1,75 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import Todo from "../Todo";
 import { TODO_ACTIONS } from "../../../reducers/todoReducer";
-import {TODO_ACTIONS} from './'
+import Todo from "../Todo";
 
 afterEach(cleanup);
 
-const TODO_CONFIG = {
-  todo: {
-    id: 1,
-    active: false,
-    complete: false,
-    title: "",
-  },
+const TODO = {
+  id: 1,
+  active: false,
+  complete: false,
+  title: "TEMP TODO",
+};
+
+const DISPATCH = {
   todosDispatch: jest.fn(),
 };
 
 describe("<Todo /> Renders", () => {
   test("todo renders without crashing #1", () => {
-    const config = { ...TODO_CONFIG };
-    config.todo.title = "Todo One";
-    render(<Todo {...config} />);
-    expect(screen.getByText(/todo one/i)).toBeInTheDocument();
+    const { getByTestId } = render(
+      <Todo todo={{ ...TODO, title: "Todo One" }} {...DISPATCH} />
+    );
+    const titleEl = getByTestId("todo.title");
+    expect(titleEl).toBeInTheDocument();
+    expect(titleEl.textContent).toBe("Todo One");
   });
 
   test("todo renders without crashing #2", () => {
-    const config = { ...TODO_CONFIG };
-    config.todo.title = "Todo Two";
-    render(<Todo {...config} />);
-    expect(screen.getByText(/todo two/i)).toBeInTheDocument();
+    const { getByTestId } = render(
+      <Todo todo={{ ...TODO, title: "Todo Two" }} {...DISPATCH} />
+    );
+    const titleEl = getByTestId("todo.title");
+    expect(titleEl).toBeInTheDocument();
+    expect(titleEl.textContent).toBe("Todo Two");
   });
 
   test("todo renders as incomplete", () => {
-    render(<Todo {...TODO_CONFIG} />);
-    expect(screen.getByTitle(/toggle/i)).not.toBeChecked();
+    const { getByTestId } = render(<Todo todo={{ ...TODO }} {...DISPATCH} />);
+    const toggleEl = getByTestId("todo.complete");
+    expect(toggleEl).not.toBeChecked();
   });
 
   test("todo renders as complete", () => {
-    const config = { ...TODO_CONFIG };
-    config.todo.complete = true;
-    render(<Todo {...config} />);
-    expect(screen.getByTitle(/toggle/i)).toBeChecked();
+    const { getByTestId } = render(
+      <Todo todo={{ ...TODO, complete: true }} {...DISPATCH} />
+    );
+    const toggleEl = getByTestId("todo.complete");
+    expect(toggleEl).toBeChecked();
   });
 
   test("todo renders as inactive", () => {
-    const { container } = render(<Todo {...TODO_CONFIG} />);
-    expect(container.firstChild.classList.contains("active")).toBe(false);
+    const { getByTestId } = render(<Todo todo={{ ...TODO }} {...DISPATCH} />);
+    const todoEl = getByTestId("todo");
+    expect(todoEl.classList.contains("active")).toBe(false);
   });
 
   test("todo renders as active", () => {
-    const config = { ...TODO_CONFIG };
-    config.todo.active = true;
-    const { container } = render(<Todo {...config} />);
-    expect(container.firstChild.classList.contains("active")).toBe(true);
+    const { getByTestId } = render(
+      <Todo todo={{ ...TODO, active: true }} {...DISPATCH} />
+    );
+    const todoEl = getByTestId("todo");
+    expect(todoEl.classList.contains("active")).toBe(true);
   });
 });
 
 describe("<Todo /> Events", () => {
-  beforeEach(() => render(<Todo {...TODO_CONFIG} />));
+  beforeEach(() => render(<Todo todo={TODO} {...DISPATCH} />));
 
   test("edit event", () => {
-    fireEvent.click(screen.getByTitle(/edit/i));
-    expect(TODO_CONFIG.todosDispatch).toHaveBeenCalledWith({
+    const editEl = screen.getByTestId('todo.select');
+    fireEvent.click(editEl);
+    expect(DISPATCH.todosDispatch).toHaveBeenCalledWith({
       type: TODO_ACTIONS.SELECT,
       todo: {
         id: 1,
@@ -69,8 +78,9 @@ describe("<Todo /> Events", () => {
   });
 
   test("remove event", () => {
-    fireEvent.click(screen.getByTitle(/remove/i));
-    expect(TODO_CONFIG.todosDispatch).toHaveBeenCalledWith({
+    const removeEl = screen.getByTestId('todo.remove');
+    fireEvent.click(removeEl);
+    expect(DISPATCH.todosDispatch).toHaveBeenCalledWith({
       type: TODO_ACTIONS.REMOVE,
       todo: {
         id: 1,
@@ -79,8 +89,9 @@ describe("<Todo /> Events", () => {
   });
 
   test("toggle event", () => {
-    fireEvent.click(screen.getByTitle(/toggle/i));
-    expect(TODO_CONFIG.todosDispatch).toHaveBeenCalledWith({
+    const toggleEl = screen.getByTestId('todo.complete');
+    fireEvent.click(toggleEl);
+    expect(DISPATCH.todosDispatch).toHaveBeenCalledWith({
       type: TODO_ACTIONS.TOGGLE,
       todo: {
         id: 1,
