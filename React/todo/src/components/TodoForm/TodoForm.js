@@ -1,10 +1,8 @@
 import { useRef, useEffect, useState } from "react";
-import { useTodoContext } from "../../contexts/TodoContext";
 import { TODO_ACTIONS } from "../../reducers/todoReducer";
 
-const TodoForm = (props) => {
+const TodoForm = ({ todos, todosDispatch }) => {
   const inputRef = useRef();
-  const { todos, todosDispatch } = useTodoContext();
   const [todo, setTodo] = useState();
 
   const handleChange = ({ target }) => {

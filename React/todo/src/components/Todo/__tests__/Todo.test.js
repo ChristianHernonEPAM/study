@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import Todo from "../Todo";
 import { TODO_ACTIONS } from "../../../reducers/todoReducer";
+import {TODO_ACTIONS} from './'
 
 afterEach(cleanup);
 

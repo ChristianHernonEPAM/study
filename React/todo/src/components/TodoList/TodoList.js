@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { useTodoContext } from "../../contexts/TodoContext";
 import { TODO_ACTIONS } from "../../reducers/todoReducer";
 import Todo from "../Todo/Todo";
 
-const TodoList = (props) => {
-  const { todos, todosDispatch } = useTodoContext();
+const TodoList = ({ todos, todosDispatch }) => {
   const [title, setTitle] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -23,10 +20,9 @@ const TodoList = (props) => {
   return (
     <section className="todo-list">
       <h2>Your Todo List: </h2>
-      {todos?.length &&
-        sortAscendingByDueTime(todos).map((todo) => (
-          <Todo key={todo.id} todo={todo} todosDispatch={todosDispatch} />
-        ))}
+      {sortAscendingByDueTime(todos).map((todo) => (
+        <Todo key={todo.id} todo={todo} todosDispatch={todosDispatch} />
+      ))}
       <form className="new-todo-form" onSubmit={handleSubmit}>
         <input
           type="text"
