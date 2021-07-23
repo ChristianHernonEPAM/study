@@ -6,8 +6,9 @@ const TODO = {
   id: 1,
   title: "Test Todo",
   active: false,
-  complete: false,
-  description: 'Some todo description',
+  complete: true,
+  description: "Some todo description",
+  dueDate: "2021-07-30",
 };
 
 const DISPATCH = {
@@ -47,19 +48,96 @@ describe("<TodoForm /> Renders", () => {
     test("todoform title prefills", () => {
       const titleEl = screen.getByTestId("todo-form.title");
       expect(titleEl).toBeInTheDocument();
-      expect(titleEl.value).toBe("Test Todo");
+      expect(titleEl.value).toBe(TODO.title);
     });
 
     test("todoform title updates", () => {
       const titleEl = screen.getByTestId("todo-form.title");
       const expectedTitle = "Send Bezos to Space!";
-      expect(titleEl.value).toBe("Test Todo");
+      expect(titleEl.value).toBe(TODO.title);
       fireEvent.change(titleEl, { target: { value: expectedTitle } });
       expect(titleEl.value).toBe(expectedTitle);
     });
 
-    // test("")
+    test("todoform description prefills", () => {
+      const descEl = screen.getByTestId("todo-form.description");
+      expect(descEl).toBeInTheDocument();
+      expect(descEl.value).toBe(TODO.description);
+    });
+
+    test("todoform description updates", () => {
+      const descEl = screen.getByTestId("todo-form.description");
+      const expectedDesc = "My updated description.";
+      expect(descEl.value).toBe(TODO.description);
+      fireEvent.change(descEl, { target: { value: expectedDesc } });
+      expect(descEl.value).toBe(expectedDesc);
+    });
+
+    test("todoform date prefills", () => {
+      const dateEl = screen.getByTestId("todo-form.date");
+      expect(dateEl).toBeInTheDocument();
+      expect(dateEl.value).toBe(TODO.dueDate);
+    });
+
+    test("todoform date updates", () => {
+      const dateEl = screen.getByTestId("todo-form.description");
+      const expectedDate = "2022-12-25";
+      expect(dateEl.value).toBe(TODO.description);
+      fireEvent.change(dateEl, { target: { value: expectedDate } });
+      expect(dateEl.value).toBe(expectedDate);
+    });
+
+    test("todoform date prefills", () => {
+      const dateEl = screen.getByTestId("todo-form.date");
+      expect(dateEl).toBeInTheDocument();
+      expect(dateEl.value).toBe(TODO.dueDate);
+    });
+
+    test("todoform date updates", () => {
+      const dateEl = screen.getByTestId("todo-form.description");
+      const expectedDate = "2022-12-25";
+      expect(dateEl.value).toBe(TODO.description);
+      fireEvent.change(dateEl, { target: { value: expectedDate } });
+      expect(dateEl.value).toBe(expectedDate);
+    });
+
+    test("todoform complete prefills", () => {
+      const completeEl = screen.getByTestId("todo-form.complete");
+      expect(completeEl).toBeInTheDocument();
+      expect(completeEl).toBeChecked();
+    });
+
+    test("todoform complete prefills", () => {
+      const completeEl = screen.getByTestId("todo-form.complete");
+      expect(completeEl).toBeChecked();
+      fireEvent.click(completeEl);
+      expect(completeEl).not.toBeChecked();
+    });
   });
 });
 
-describe("<TodoForm /> Events", () => {});
+describe("<TodoForm /> Events", () => {
+  beforeEach(() =>
+    render(<TodoForm todos={[{ ...TODO, active: true }]} {...DISPATCH} />)
+  );
+
+  test("cancel event", () => {
+    const cancelBtn = screen.getByTestId("todo-form.cancel");
+    fireEvent.click(cancelBtn);
+    expect(DISPATCH.todosDispatch).toHaveBeenCalledWith({
+      type: TODO_ACTIONS.DESELECT,
+    });
+  });
+
+  test("update event", () => {
+    const updateBtn = screen.getByTestId("todo-form.update");
+    const titleEl = screen.getByTestId("todo-form.title");
+    const expectedTitle = "New Updated Title";
+    fireEvent.change(titleEl, { target: { value: expectedTitle } });
+    fireEvent.click(updateBtn);
+    expect(DISPATCH.todosDispatch).toHaveBeenCalledWith({
+      type: TODO_ACTIONS.UPDATE,
+      todo: { ...TODO, active: true, title: expectedTitle },
+    });
+  });
+});
