@@ -14,8 +14,7 @@ export const TODO_KEY = 'todo-list';
 export const todoInit = () => JSON.parse(localStorage.getItem(TODO_KEY)) || [];
 
 export const todoReducer = (state, action) => {
-  console.log(state, action);
-  switch (action.type) {
+  switch (action?.type) {
     case TODO_ACTIONS.ADD:
       const newTodo = {
         title: action.todo.title,
