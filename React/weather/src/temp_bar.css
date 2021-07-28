@@ -1,0 +1,44 @@
+.temp-bar {
+  position: relative;
+  font-size: 14px;
+  width: 95%;
+  height: 2px;
+  background: #333;
+  margin: 2rem auto 1rem;
+}
+
+.temp-bar .temp-item {
+  position: absolute;
+  display: block;
+  top: -13px;
+}
+
+.temp-bar .bar {
+  display: block;
+  height: 15px;
+  width: 2px;
+  background: #333;
+}
+
+.temp-bar .temp {
+  white-space: nowrap;
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.85em;
+}
+
+.temp-bar .min {
+  left: 0;
+}
+
+.temp-bar .curr .bar {
+  background: dodgerblue;
+}
+
+.temp-bar .curr .temp {
+  color: dodgerblue;
+}
+
+.temp-bar .max {
+  right: 0;
+}

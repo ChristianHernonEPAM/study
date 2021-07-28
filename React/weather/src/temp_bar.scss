@@ -1,0 +1,51 @@
+.temp-bar {
+  position: relative;
+  // font-size: 0.875rem;
+  font-size: 14px;
+  width: 95%;
+  // height: 0.33em;
+  height: 2px;
+  background: #333;
+  margin: 2rem auto 1rem;
+
+  .temp-item {
+    position: absolute;
+    display: block;
+    // top: calc(-1 * (1.5em - 0.33em));
+    top: -13px;
+  }
+
+  .bar {
+    display: block;
+    // font-size: 1em;
+    // height: 1.5em;
+    height: 15px;
+    // width: 0.0625em;
+    width: 2px;
+    background: #333;
+  }
+
+  .temp {
+    white-space: nowrap;
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 0.85em;
+  }
+
+  .min {
+    left: 0;
+  }
+
+  .curr {
+    .bar {
+      background: dodgerblue;
+    }
+    .temp {
+      color: dodgerblue;
+    }
+  }
+
+  .max {
+    right: 0;
+  }
+}
